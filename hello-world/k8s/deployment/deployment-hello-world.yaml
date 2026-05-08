@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: felipevarejao/hello-world:v2
+        image: felipevarejao/hello-world:v3
         ports:
         - containerPort: 8080
         env:
