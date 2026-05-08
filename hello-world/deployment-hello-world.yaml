@@ -18,3 +18,19 @@ spec:
         image: felipevarejao/hello-world:v2
         ports:
         - containerPort: 8080
+        env:
+        - name: MESSAGE
+          valueFrom:
+            configMapKeyRef:
+              name: hello-world-config
+              key: message
+        - name: FAKE-SECRET-USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: hello-secret
+              key: username
+        - name: FAKE-SECRET-PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: hello-secret
+              key: password
