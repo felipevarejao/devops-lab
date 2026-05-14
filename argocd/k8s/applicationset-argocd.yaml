@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: appset-argocd
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: 'https://github.com/felipevarejao/devops-lab'
+        revision: HEAD
+        directories:
+          - path: apps/*/k8s
+  template:
+    metadata:
+      name: '{{path[1]}}' # Usa o nome do diretório como nome da aplicação
+    spec:
+      project: default
+      source:
+        repoURL: 'https://github.com/felipevarejao/devops-lab'
+        targetRevision: HEAD
+        path: '{{path}}' # Usa o caminho dinâmico encontrado pelo generator
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace: devops-lab
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
